@@ -9,6 +9,7 @@ import 'package:basecode/widgets/SecondaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../User.dart';
 import 'ForgotPasswordScreen.dart';
@@ -22,18 +23,22 @@ class RegistrationScreen extends StatefulWidget {
 class RegistrationScreenState extends State<RegistrationScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  bool _isLoading = false;
 
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   DatabaseService _databaseService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: ModalProgressHUD(
+        inAsyncCall: _isLoading,
+        child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -53,7 +58,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       hintText:
                           "First Name must have a minimum of 4 characters.",
                       iconData: FontAwesomeIcons.user,
-                      controller: TextEditingController()),
+                      controller: _firstNameController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -62,7 +67,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       hintText:
                           "First Name must have a minimum of 4 characters.",
                       iconData: FontAwesomeIcons.user,
-                      controller: TextEditingController()),
+                      controller: _lastNameController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -70,7 +75,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       labelText: "Email",
                       hintText: "Enter a valid email.",
                       iconData: FontAwesomeIcons.solidEnvelope,
-                      controller: TextEditingController()),
+                      controller: _emailController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -83,7 +88,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       },
                       labelText: "Password",
                       hintText: "Enter your password",
-                      controller: TextEditingController()),
+                      controller: _passwordController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -96,7 +101,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       },
                       labelText: "Confirm Password",
                       hintText: "Your passwords must match.",
-                      controller: TextEditingController()),
+                      controller: _confirmPasswordController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -129,18 +134,20 @@ class RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
+      ),
     );
   }
 
   register() async{
-    // setState(() {
-    //   _isLoading = true;
-    // });
+    try{
+        setState(() {
+      _isLoading = true;
+    });
 
     var user = User(
-      _firstNameController.value.text,
-      _lastNameController.value.text,
-      _emailController.value.text,
+      _firstNameController.text,
+      _lastNameController.text,
+      _emailController.text,
       _passwordController.value.text);
 
       var result = await _databaseService.registerUser(user);
@@ -152,9 +159,11 @@ class RegistrationScreenState extends State<RegistrationScreen> {
 
         Get.offNamed(DashboardScreen.routeName);
       }
-
-    //   setState(() {
-    //   _isLoading = false;
-    // });
+    }catch(e){
+      print(e);
+    }
+      setState(() {
+      _isLoading = false;
+    });
   }
 }

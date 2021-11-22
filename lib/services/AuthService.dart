@@ -32,13 +32,15 @@ class AuthService{
     }
   }
 
-  Future<UserCredential> createUser(String email, String password) async {
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+  //Future<UserCredential> createUser(String email, String password) async => await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-    return userCredential;
+  Future<UserCredential> createUser(String email, String password) async {
+    UserCredential _userCredential;
+    _userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    return _userCredential;
   }
 
-  //Shorter version ng taas
-  Future<UserCredential> signInWIthEmailAndPassword(String email, String password) async => 
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+  Future<UserCredential> signInWIthEmailAndPassword(String email, String password) async => await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 }

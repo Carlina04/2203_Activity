@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {

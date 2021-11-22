@@ -28,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(30.0))),
       ),
+      controller: controller,
     );
   }
 }

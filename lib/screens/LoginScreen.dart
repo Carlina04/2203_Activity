@@ -54,7 +54,7 @@ class LoginScreenState extends State<LoginScreen> {
                       labelText: "Email",
                       hintText: "Enter a valid email.",
                       iconData: FontAwesomeIcons.solidEnvelope,
-                      controller: TextEditingController()),
+                      controller: _emailController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -67,17 +67,15 @@ class LoginScreenState extends State<LoginScreen> {
                       },
                       labelText: "Password",
                       hintText: "Enter your password",
-                      controller: TextEditingController()),
+                      controller: _passwordController),
                   SizedBox(
                     height: 20.0,
                   ),
                   PrimaryButton(
                       text: "Login",
                       iconData: FontAwesomeIcons.doorOpen,
-                      onPress: () {
-                        //authenticate here
-                        Get.offNamed(DashboardScreen.routeName);
-                      }),
+                      onPress: loginWithEmailAndPassword
+                    ),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -159,8 +157,8 @@ class LoginScreenState extends State<LoginScreen> {
   }catch(e){
   }
   
-//   setState((){
-//    isLogginIn = false;
-//  });
+  setState((){
+   isLoggingIn = false;
+ });
  }
 }
