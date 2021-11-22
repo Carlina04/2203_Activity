@@ -1,10 +1,11 @@
-# basecodeflutter
+# Activity in 2203 Mobile Development
 
-Base code for my flutter projects.
+Thanks for the Base code sir.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a my sad, sad attempt at enabling Google Sign as well as traditional sign in method.
+This also utilises Firestore Database. The users collection holds the user information duh.
 
 A few resources to get you started if this is your first Flutter project:
 
